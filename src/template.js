@@ -1,8 +1,24 @@
 import fs from "fs";
-import dateFormat from "dateformat";
 
-const format_template = (template) => {
-  return template.replace("{date}", dateFormat(new Date(), "dd mmmm"));
+export const format_template = (template, payload, template_list) => {
+  template_list.forEach((data) => {
+    if (Array.isArray(data)) {
+      data.forEach(({ variable, value , auto_key = true}, key) => {
+        if(auto_key) {
+          template = template.replace(`{${variable}_${key}}`, value);
+        } else {
+          template = template.replace(`{${variable}}`, value);
+        }
+      });
+    } else {
+      const { variable, value } = data;
+      template = template.replace(`{${variable}}`, value);
+    }
+  });
+
+  const regex = /\{(.*?)\}/g
+  template = template.replaceAll(regex, "N/A")
+  payload(template);
 };
 
 export const load_template = async (name) => {
@@ -10,7 +26,7 @@ export const load_template = async (name) => {
     fs.readFile(`./template/${name}.html`, "utf8", function (err, html) {
       if (err) reject(err);
 
-      resolve(format_template(html));
+      resolve(html);
     });
   });
 };
