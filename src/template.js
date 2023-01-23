@@ -3,8 +3,8 @@ import fs from "fs";
 export const format_template = (template, payload, template_list) => {
   template_list.forEach((data) => {
     if (Array.isArray(data)) {
-      data.forEach(({ variable, value , auto_key = true}, key) => {
-        if(auto_key) {
+      data.forEach(({ variable, value, auto_key = true }, key) => {
+        if (auto_key) {
           template = template.replace(`{${variable}_${key}}`, value);
         } else {
           template = template.replace(`{${variable}}`, value);
@@ -16,8 +16,8 @@ export const format_template = (template, payload, template_list) => {
     }
   });
 
-  const regex = /\{(.*?)\}/g
-  template = template.replaceAll(regex, "N/A")
+  const regex = /\{(.*?)\}/g;
+  template = template.replaceAll(regex, "N/A");
   payload(template);
 };
 

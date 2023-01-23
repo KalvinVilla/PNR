@@ -4,8 +4,15 @@ import logger from "./logger.js";
 
 const log = logger(import.meta);
 
-const { smtp_server, smtp_port, smtp_user, smtp_password, smtp_sender } =
-  process.env;
+const {
+  smtp_server,
+  smtp_port,
+  smtp_user,
+  smtp_subject,
+  smtp_password,
+  smtp_sender,
+  smtp_receiver,
+} = process.env;
 
 const transporter = nodemailer.createTransport({
   host: smtp_server,
@@ -18,14 +25,23 @@ const transporter = nodemailer.createTransport({
   tls: { rejectUnauthorized: false },
 });
 
-export const send_mail = async (to, subject, html) => {
+export const send_mail = async (to, html) => {
   const options = {
     from: smtp_sender,
     to,
-    subject,
+    subject: smtp_subject,
     html,
   };
 
   const info = await transporter.sendMail(options);
   log.info(info.messageId);
+};
+
+export const get_receiver = () => {
+  if (smtp_receiver.includes(",")) {
+    const list = smtp_receiver.split(",");
+    return list;
+  } else {
+    return smtp_receiver;
+  }
 };
