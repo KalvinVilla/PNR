@@ -13,6 +13,7 @@ export const fetch_log_hostname = async () => {
     |> group(columns: ["hostname"])
     |> count()
     |> group()
+    |> top(columns: ["_value"], n: 6)
     |> keep(columns: ["_value", "hostname"])`).then((data) => {
       resolve(
         data.map(({ _value, hostname }) => {
