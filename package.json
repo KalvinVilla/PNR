@@ -1,13 +1,17 @@
 {
   "name": "pnr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Periodic Network Report is a simple smtp report of Zabbix/Syslog/Sflow",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "dev": "node src/index.js",
+    "start": "node src/index.js",
     "format": "prettier . --write && eslint . --fix",
     "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KalvinVilla/PNR.git"
   },
   "keywords": [
     "report",
@@ -19,6 +23,10 @@
   ],
   "author": "Kavika",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KalvinVilla/PNR/issues"
+  },
+  "homepage": "https://github.com/KalvinVilla/PNR#readme",
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.19.1",

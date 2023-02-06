@@ -14,10 +14,8 @@ export const fetch_zabbix_problems = async () => {
       time_from: yesterday,
       time_till: now,
       output: ["severity"],
-      recent:	false,
-      sortfield: [
-        "eventid"
-      ]
+      recent: false,
+      sortfield: ["eventid"],
     }).then(({ result }) => {
       resolve(
         Object.values(problems_severity).map((el) => {
