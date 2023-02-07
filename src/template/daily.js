@@ -10,6 +10,7 @@ import { fetch_zabbix_history } from "../zabbix/history.js";
 import { fetch_zabbix_problems } from "../zabbix/problems.js";
 import fs from "fs";
 import { now } from "../utils.js";
+import { fetch_zabbix_event } from "../zabbix/event.js";
 
 const date = {
   variable: "DATE",
@@ -23,18 +24,19 @@ const title = {
 export const send_daily = async () => {
   const template = await load_template("daily");
 
-  const pc_ram = await fetch_zabbix_history("PC", "vm.memory.util", "RAM_PC");
   const log = await fetch_log();
   const debit = await fetch_sflow_debit();
   const appname = await fetch_log_appname();
   const hostname = await fetch_log_hostname();
   const protocol = await fetch_sflow_protocol();
   const count_problems = await fetch_zabbix_problems();
+  const count_triggers = await fetch_zabbix_event();
   const server_cpu = await fetch_zabbix_history(
     "Server",
     "system.cpu.util",
     "CPU_SERV"
   );
+  const pc_ram = await fetch_zabbix_history("PC", "vm.memory.util", "RAM_PC");
   const server_ram = await fetch_zabbix_history(
     "Server",
     "vm.memory.util",
@@ -49,13 +51,14 @@ export const send_daily = async () => {
   format_template(
     template,
     (template) => {
+      fs.writeFileSync(`${now}.html`, template);
       send_mail(get_receiver(), template);
-      //fs.writeFileSync(`${now}.html`, template);
     },
     [
       date,
       title,
       count_problems,
+      count_triggers,
       log,
       debit,
       appname,

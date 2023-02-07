@@ -1,6 +1,6 @@
 {
   "name": "pnr",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Periodic Network Report is a simple smtp report of Zabbix/Syslog/Sflow",
   "main": "src/index.js",
   "type": "module",

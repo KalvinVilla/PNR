@@ -32,3 +32,22 @@ export const list_top = (list, key, top) => {
 
   return list_agv.slice(0, top);
 };
+
+export const list_count = (list, key, top) => {
+  const list_object = {};
+
+  for (const obj of list) {
+    const key_value = obj[key];
+    if (!list_object[key_value]) {
+      list_object[key_value] = {
+        [key]: key_value,
+        count: 0,
+      };
+    }
+    list_object[key_value].count++;
+  }
+
+  return Object.values(list_object)
+    .sort((a, b) => (b.count < a.count ? -1 : 1))
+    .slice(0, top);
+};
