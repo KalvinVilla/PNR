@@ -1,5 +1,5 @@
 import zabbix_fetch from "../fetch/zabbix.js";
-import { now, yesterday, zabbix_items_top } from "../utils.js";
+import { list_top, now, yesterday } from "../utils.js";
 import { fetch_zabbix_groups } from "./groups.js";
 import { fetch_zabbix_item } from "./items.js";
 
@@ -24,7 +24,7 @@ export const fetch_zabbix_history = async (hostgroup_name, key, variable) => {
           sortorder: "ASC",
         }).then(({ result }) => {
           resolve(
-            zabbix_items_top(result, 5).map(({ itemid, value }) => {
+            list_top(result, "itemid", 5).map(({ itemid, value }) => {
               const hostid = items.find((el) => {
                 return el.itemid === itemid;
               })?.hostid;

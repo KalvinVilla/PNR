@@ -7,26 +7,28 @@ export const convert_bytes_to_giga = (octet) => {
   return Math.round(octet / 1000000000);
 };
 
-export const zabbix_items_top = (items, top) => {
-  const items_object = {};
-  for (const obj of items) {
-    if (!items_object[obj.itemid]) {
-      items_object[obj.itemid] = {
-        itemid: obj.itemid,
+export const list_top = (list, key, top) => {
+  const list_object = {};
+
+  for (const obj of list) {
+    const key_value = obj[key];
+    if (!list_object[key_value]) {
+      list_object[key_value] = {
+        [key]: key_value,
         value: 0,
         count: 0,
       };
     }
-    items_object[obj.itemid].value += parseFloat(obj.value);
-    items_object[obj.itemid].count++;
+    list_object[key_value].value += parseFloat(obj.value);
+    list_object[key_value].count++;
   }
 
-  const items_agv = Object.values(items_object).map((obj) => {
+  const list_agv = Object.values(list_object).map((obj) => {
     obj.value /= obj.count;
     return obj;
   });
 
-  items_agv.sort((a, b) => b.value - a.value);
+  list_agv.sort((a, b) => b.value - a.value);
 
-  return items_agv.slice(0, top);
+  return list_agv.slice(0, top);
 };
