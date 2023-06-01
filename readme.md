@@ -24,16 +24,18 @@ git clone https://github.com/KalvinVilla/PNR.git
 cd pnr
 npm install
 ```
-Don't forget to change the config file :
+Don't forget to change the config file and port file :
 ### Linux
 ```
 move .env.example .env
+move port.json.example port.json
 nano .env
 ```
 
 ### Windows
 ```
 rename .env.example .env
+rename port.json.example port.json
 notepad .env
 ```
 
