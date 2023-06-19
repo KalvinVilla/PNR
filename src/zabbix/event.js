@@ -17,7 +17,7 @@ export const fetch_zabbix_event = async () => {
           });
           return {
             variable: `EVENT`,
-            value: `${hosts[0].name} | ${name} | ${count}`,
+            value: `<h2>${hosts[0].name}</h2><strong>${count} fois</strong><br />${name}`,
           };
         })
       );
