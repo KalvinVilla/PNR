@@ -24,7 +24,7 @@ export const list_top = (list, key, top) => {
   }
 
   const list_agv = Object.values(list_object).map((obj) => {
-    obj.value /= obj.count;
+    obj.value = parseFloat((obj.value / obj.count).toFixed(2));
     return obj;
   });
 

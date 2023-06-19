@@ -33,18 +33,22 @@ export const send_daily = async () => {
   const count_triggers = await fetch_zabbix_event();
   const server_cpu = await fetch_zabbix_history(
     "Server",
-    "system.cpu.util",
+    "CPU utilization",
     "CPU_SERV"
   );
-  const pc_ram = await fetch_zabbix_history("PC", "vm.memory.util", "RAM_PC");
+  const pc_ram = await fetch_zabbix_history(
+    "PC",
+    "Memory utilization",
+    "RAM_PC"
+  );
   const server_ram = await fetch_zabbix_history(
     "Server",
-    "vm.memory.util",
+    "Memory utilization",
     "RAM_SERV"
   );
   const switch_cpu = await fetch_zabbix_history(
     "Switch",
-    "hmCpuAverageUtilization",
+    "CPU utilization",
     "CPU_SWITCH"
   );
 
